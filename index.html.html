@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="path/to/favicon.ico" type="image/x-icon"> <!-- Add Favicon -->
+    <title>ABA Corretora de Seguros</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #000;
+            color: #dfdc5d;
+            line-height: 1.7;
+            overflow-x: hidden; /* Prevent horizontal overflow */
+        }
+
+        header {
+            background: #333;
+            color: #d6af3f;
+            padding: 60px;
+            text-align: center;
+            border-bottom: 2px solid #d6af3f;
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            background: #d6af3f;
+            padding: 15px;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        nav a {
+            color: #000;
+            padding: 15px 25px;
+            text-decoration: none;
+            border: 2px solid #d6af3f;
+            border-radius: 5px;
+            margin: 5px;
+            transition: background-color 0.4s ease, color 0.4s ease;
+            font-weight: 500;
+            text-transform: uppercase;
+        }
+
+        nav a:hover {
+            background: #000;
+            color: #d6af3f;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: auto;
+            padding: 30px 0;
+        }
+
+        footer {
+            background: #d6af3f;
+            color: #000;
+            text-align: center;
+            padding: 20px 0;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+            margin-top: 30px; /* Space above footer */
+        }
+
+        .whatsapp-btn {
+            background: #25D366;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 18px;
+            margin-top: 20px;
+            transition: background-color 0.4s ease, transform 0.4s ease;
+            font-weight: 600;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .whatsapp-btn:hover {
+            background: #128C7E;
+            transform: scale(1.05);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+        }
+
+        .service {
+            background: #1a1a1a;
+            border: 2px solid #d6af3f;
+            border-radius: 10px;
+            margin: 30px 0; /* Increased margin */
+            padding: 20px;
+            transition: transform 0.4s, opacity 0.5s;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .service.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .service img {
+            max-width: 100%;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            transition: filter 0.4s;
+        }
+
+        .service img:hover {
+            filter: brightness(90%);
+        }
+
+        .testimonials {
+            background: #333;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .testimonial {
+            margin: 10px 0;
+            font-style: italic;
+            font-weight: 300;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .testimonial:hover {
+            color: #d6af3f;
+        }
+
+        #contact-form {
+            display: flex;
+            flex-direction: column;
+            margin-top: 20px;
+        }
+
+        #contact-form input,
+        #contact-form textarea {
+            margin: 10px 0;
+            padding: 12px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            transition: border-color 0.3s;
+            font-size: 16px;
+        }
+
+        #contact-form input:focus,
+        #contact-form textarea:focus {
+            border-color: #d6af3f;
+            outline: none;
+        }
+
+        #contact-form button {
+            background: #d6af3f;
+            color: #000;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+            font-weight: 500;
+            transition: background-color 0.4s ease, transform 0.4s ease;
+            font-size: 16px;
+        }
+
+        #contact-form button:hover {
+            background: #b2942a;
+            transform: translateY(-2px);
+        }
+
+        /* Estilo do modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding-top: 60px;
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 600px;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .contact-info {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 15px 0; /* Adjust margin */
+        }
+
+        .contact-info i {
+            margin-right: 10px;
+            color: #d6af3f;
+            font-size: 24px; /* Slightly larger icons */
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>ABA Corretora de Seguros</h1>
+        <p>Proteger o que importa é a nossa missão!</p>
+    </header>
+
+    <nav>
+        <a href="#seguro-automovel">Seguro de Automóvel</a>
+        <a href="#seguro-vida">Seguro de Vida</a>
+        <a href="#seguro-residencial">Seguro Residencial</a>
+        <a href="#plano-odontologico">Plano Odontológico</a>
+        <a href="#seguro-empresarial">Seguro Empresarial</a>
+        <a href="#depoimentos">Depoimentos</a>
+        <a href="#contato">Contato</a>
+    </nav>
+
+    <div class="container">
+        <h2>Nossos Serviços</h2>
+
+        <section id="seguro-automovel" class="service">
+            <img src="c:\Users\Netin\Downloads\Capturar.png 5.JPG" alt="Seguro de Automóvel">
+            <h3>Seguro de Automóvel</h3>
+            <p>Proteja seu veículo contra danos, roubos e muito mais. Nossos planos oferecem cobertura completa e assistência 24 horas.</p>
+        </section>
+
+        <section id="seguro-saúde" class="service">
+            <img src="c:\Users\Netin\Downloads\Capturar.png 2.JPG" alt="Seguro de Vida">
+            <h3>Seguro de Vida</h3>
+            <p>Cuidamos do seu futuro e da sua família, proporcionando segurança e tranquilidade. Oferecemos diversas opções de cobertura.</p>
+        </section>
+
+        <section id="seguro-residencial" class="service">
+            <img src="c:\Users\Netin\Downloads\Capturar.png 4.JPG" alt="Seguro Residencial">
+            <h3>Seguro Residencial</h3>
+            <p>Proteja sua casa contra incêndios, furtos e desastres naturais. Conte conosco para garantir a segurança do seu lar.</p>
+        </section>
+
+        <section id="plano-odontologico" class="service">
+            <img src="c:\Users\Netin\Downloads\Capturar.PNG 1.JPG" alt="Plano Odontológico">
+            <h3>Plano Odontológico</h3>
+            <p>Cuidamos do seu sorriso! Nossos planos odontológicos garantem atendimento de qualidade e comodidade para você e sua família.</p>
+        </section>
+
+        <section id="seguro-empresarial" class="service">
+            <img src="c:\Users\Netin\Downloads\Capturar.png 3.JPG" alt="Seguro Empresarial">
+            <h3>Seguro Empresarial</h3>
+            <p>Proteja seu negócio! Oferecemos soluções personalizadas para garantir a segurança da sua empresa e do seu patrimônio.</p>
+        </section>
+
+        <h4>Entre em contato conosco:</h4>
+        <div class="contact-info">
+            <i class="fas fa-phone"></i>
+            <p>Telefone: <strong><a href="tel:+82896070007">(82) 99607-0007</a></strong></p>
+        </div>
+        <div class="contact-info">
+            <i class="fas fa-envelope"></i>
+            <p>Email: <strong><a href="mailto:abacorretoradeseguros@gmail.com">abacorretoradeseguros@gmail.com</a></strong></p>
+        </div>
+        <div class="contact-info">
+            <i class="fab fa-instagram"></i>
+            <p>Instagram: <strong><a href="https://www.instagram.com/abacorretora_seguros/" target="_blank">@abacorretora_seguros</a></strong></p>
+        </div>
+        <a class="whatsapp-btn" href="https://api.whatsapp.com/send?phone=82996070007" target="_blank">Fale Conosco no WhatsApp</a>
+
+        <h2 id="depoimentos">Depoimentos</h2>
+        <div class="testimonials">
+            <div class="testimonial" onclick="openModal('depoimento1')">"A ABA Corretora de Seguros me ajudou a encontrar o seguro perfeito para o meu carro. Excelente atendimento!" - João S.</div>
+            <div class="testimonial" onclick="openModal('depoimento2')">"Muito satisfeita com o seguro de vida que contratei. Meus filhos estão protegidos!" - Maria F.</div>
+            <div class="testimonial" onclick="openModal('depoimento3')">"Ótimo atendimento e condições de pagamento no seguro residencial!" - Carlos R.</div>
+            <div class="testimonial" onclick="openModal('depoimento4')">"Com o plano odontológico, cuido do meu sorriso e da minha saúde bucal!" - Ana T.</div>
+        </div>
+
+        <h2 id="contato">Contato</h2>
+        <form id="contact-form" onsubmit="return sendMessage()">
+            <input type="text" placeholder="Seu Nome" required>
+            <input type="email" placeholder="Seu Email" required>
+            <textarea placeholder="Sua Mensagem" rows="5" required></textarea>
+            <button type="submit">Enviar Mensagem</button>
+        </form>
+    </div>
+
+    <footer>
+        <p>&copy; 2017 ABA Corretora de Seguros. Todos os direitos reservados.</p>
+        <p>Conecte-se conosco:
+            <a href="https://www.instagram.com/abacorretora_seguros/" target="_blank">Instagram</a> |
+            <a href="https://www.facebook.com/abacorretoradeseguros/" target="_blank">Facebook</a>
+        </p>
+    </footer>
+
+    <!-- Modal -->
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h4 id="modal-title"></h4>
+            <p id="modal-message"></p>
+        </div>
+    </div>
+
+    <script>
+        // Mostrar / Ocultar serviços com animação
+        window.addEventListener('scroll', function () {
+            const services = document.querySelectorAll('.service');
+            services.forEach((service) => {
+                const rect = service.getBoundingClientRect();
+                if (rect.top < window.innerHeight && rect.bottom >= 0) {
+                    service.classList.add('visible');
+                }
+            });
+        });
+
+        // Função para abrir o modal
+        function openModal(depoimento) {
+            const modal = document.getElementById("myModal");
+            const title = document.getElementById("modal-title");
+            const message = document.getElementById("modal-message");
+
+            // Definindo o conteúdo baseado no depoimento clicado
+            switch (depoimento) {
+                case 'depoimento1':
+                    title.innerText = "Depoimento de João S.";
+                    message.innerText = "A ABA Corretora de Seguros me ajudou a encontrar o seguro perfeito para o meu carro. Excelente atendimento!";
+                    break;
+                case 'depoimento2':
+                    title.innerText = "Depoimento de Maria F.";
+                    message.innerText = "Muito satisfeita com o seguro de vida que contratei. Meus filhos estão protegidos!";
+                    break;
+                case 'depoimento3':
+                    title.innerText = "Depoimento de Carlos R.";
+                    message.innerText = "Ótimo atendimento e condições de pagamento no seguro residencial!";
+                    break;
+                case 'depoimento4':
+                    title.innerText = "Depoimento de Ana T.";
+                    message.innerText = "Com o plano odontológico, cuido do meu sorriso e da minha saúde bucal!";
+                    break;
+                default:
+                    break;
+            }
+
+            modal.style.display = "block";
+        }
+
+        // Função para fechar o modal
+        function closeModal() {
+            const modal = document.getElementById("myModal");
+            modal.style.display = "none";
+        }
+
+        // Função para enviar mensagem
+        function sendMessage() {
+            alert("Mensagem enviada com sucesso!");
+            return false; // Impede o envio real do formulário
+        }
+    </script>
+
+</body>
+</html>
